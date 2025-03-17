@@ -1,0 +1,29 @@
+<div class="relative w-full mt-5 max-w-5xl mx-auto overflow-hidden">
+  <p class="text-4xl font-semibold text-center py-2">Latest News</p>
+
+  <!-- News Slide Container -->
+  <div class="flex transition-transform duration-700 ease-in-out"
+       [ngStyle]="{ transform: 'translateX(-' + currentIndex * 100 + '%)' }">
+    <div *ngFor="let item of news" class="w-full flex-shrink-0 p-1 relative">
+      <img [src]="item.image" class="w-full h-52 md:h-80 object-cover rounded-lg bg-opacity-50 bg-gray-100" />
+
+      <!-- Tag & Title Positioned Properly -->
+      <div class="absolute inset-0 flex flex-col items-start justify-end p-4 space-y-2">
+        <div class="bg-gray-700 px-2 py-1 rounded text-white text-md text-sm">
+          {{ item.tag }}
+        </div>
+        <div class="text-white text-lg px-2 rounded bg-stone-700  font-semibold">
+          {{ item.title }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Buttons -->
+  <button (click)="prevSlide()" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-gray-700 text-white px-2 py-1 rounded">
+    ❮
+  </button>
+  <button (click)="nextSlide()" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-gray-700 text-white px-2 py-1 rounded">
+    ❯
+  </button>
+</div>

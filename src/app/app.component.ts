@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { CarouselComponent } from "./components/carousel/carousel.component";
+import { AllNewsComponent } from "./components/all-news/all-news.component";
+import { HomeComponent } from './components/home/home.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet,HomeComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

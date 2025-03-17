@@ -1,0 +1,35 @@
+<div class="p-0 md:p-28">
+    <!-- Grid Layout: 4 columns on large screens, 1 column on mobile -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-8 gap-x-4 p-2 md:gap-x-8">
+      
+      <ng-container *ngFor="let item of news; let i = index">
+        <!-- Flex Layout: Image 50%, Text 50% on mobile -->
+        <div class="flex flex-row sm:flex-col items-center bg-white overflow-hidden">
+          <img [src]="item.image" class="w-1/2 sm:w-full h-32 object-cover rounded" />
+          <div class="w-1/2 sm:w-full text-left font-semibold flex flex-col justify-between h-32 px-1">
+            <div class="flex justify-between items-center">
+              <div class="title line-clamp-4 overflow-hidden text-ellipsis h-24">
+                {{ item.title }}
+              </div>   
+            </div>
+            <div class="time flex justify-between items-center text-sm font-normal">
+              <div class="tag bg-gray-700 px-3 rounded text-white mt-2">{{ item.tag }}</div>
+              <div>
+                <i class="fa-regular fa-clock mr-2"></i> {{ item.time }}
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Har 8 grid items ke baad carousel add hoga -->
+        <ng-container *ngIf="(i + 1) % 8 === 0">
+          <div class="col-span-full w-full">
+            <app-carousel></app-carousel>
+          </div>
+        </ng-container>
+  
+      </ng-container>
+  
+    </div>
+  </div>
+  
