@@ -5,7 +5,7 @@ import { TrendingNewsComponent } from '../trending-news/trending-news.component'
 
 @Component({
   selector: 'app-home',
-  imports: [CarouselComponent, AllNewsComponent,TrendingNewsComponent],
+  imports: [CarouselComponent, AllNewsComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
