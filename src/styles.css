@@ -1,3 +1,7 @@
 @import url('../node_modules/@fortawesome/fontawesome-free/css/all.css');
 @import "tailwindcss";
 
+
+.bg-blacks{
+    background-color: black;
+}

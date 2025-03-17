@@ -1,1 +1,85 @@
-<p>header works!</p>
+<header class="bg-blacks text-white">
+    <div class="container mx-auto flex justify-between items-center py-4 px-2">
+      <!-- Logo -->
+      <a routerLink="/" class=" font-bold"><img src="logo.png" alt="" class="h-10"></a>
+  
+      <!-- Hamburger Menu Button (Mobile) -->
+      <button class="md:hidden text-white text-2xl" (click)="toggleMenu()">
+        <span *ngIf="!isMenuOpen">&#9776;</span> <!-- Hamburger Icon -->
+        <span *ngIf="isMenuOpen">&times;</span>  <!-- X Icon -->
+      </button>
+  
+      <!-- Navigation (Desktop) -->
+      <nav class="hidden md:flex space-x-6">
+        <ul class="flex space-x-6">
+          <!-- News Dropdown -->
+          <li class="relative group" (mouseenter)="isDropdownOpen = true" (mouseleave)="isDropdownOpen = false">
+            <button class="hover:text-gray-300 flex items-center">
+              News
+              <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+              </svg>
+            </button>
+  
+            <!-- Dropdown Menu -->
+            <ul *ngIf="isDropdownOpen" 
+                class="absolute left-0 bg-black text-white z-50 mt-2 py-2 w-40 shadow-lg rounded border border-white">
+              <li class="hover:bg-gray-800 border-b border-white">
+                <a routerLink="/celebrity" class="block px-4 py-2">Celebrity</a>
+              </li>
+              <li class="hover:bg-gray-800 border-b border-white">
+                <a routerLink="/entertainment" class="block px-4 py-2">Entertainment</a>
+              </li>
+              <li class="hover:bg-gray-800 border-b border-white">
+                <a routerLink="/politics" class="block px-4 py-2">Politics</a>
+              </li>
+              <li class="hover:bg-gray-800 border-b border-white">
+                <a routerLink="/crime" class="block px-4 py-2">Crime</a>
+              </li>
+              <li class="hover:bg-gray-800">
+                <a routerLink="/business" class="block px-4 py-2">Business</a>
+              </li>
+            </ul>
+          </li>
+  
+          <!-- Other Pages -->
+          <li><a routerLink="/about-us" class="hover:text-gray-300">About Us</a></li>
+          <li><a routerLink="/contact-us" class="hover:text-gray-300">Contact Us</a></li>
+          <li><a routerLink="/announcement" class="hover:text-gray-300">Announcement</a></li>
+        </ul>
+      </nav>
+    </div>
+  
+    <!-- Mobile Menu (Sliding Sidebar) -->
+    <div class="fixed top-0 left-0 w-full h-fit min-h-64  bg-blacks text-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out"
+         [ngClass]="{'-translate-y-full': !isMenuOpen, 'translate-y-0': isMenuOpen}">
+      <button class="absolute top-4 right-4 text-2xl" (click)="toggleMenu()">&times;</button>
+      
+      <ul class="mt-5 space-y-4 px-6">
+        <!-- Mobile Dropdown for News -->
+         <li>
+            <a routerLink="/" class=" font-bold"><img src="logo.png" alt="" class="h-10"></a>
+         </li>
+      
+        <li>
+          <button class="w-full text-left py-2 flex justify-between items-center" (click)="toggleMobileDropdown()">
+            News
+            <span *ngIf="!isMobileDropdownOpen">+</span>
+            <span *ngIf="isMobileDropdownOpen">−</span>
+          </button>
+          <ul *ngIf="isMobileDropdownOpen" class="pl-4 z-50 border-l border-white">
+            <li><a routerLink="/celebrity" class="block py-2">Celebrity</a></li>
+            <li><a routerLink="/entertainment" class="block py-2">Entertainment</a></li>
+            <li><a routerLink="/politics" class="block py-2">Politics</a></li>
+            <li><a routerLink="/crime" class="block py-2">Crime</a></li>
+            <li><a routerLink="/business" class="block py-2">Business</a></li>
+          </ul>
+        </li>
+  
+        <li><a routerLink="/about-us" class="block py-2">About Us</a></li>
+        <li><a routerLink="/contact-us" class="block py-2">Contact Us</a></li>
+        <li><a routerLink="/announcement" class="block py-2">Announcement</a></li>
+      </ul>
+    </div>
+  </header>
+  
