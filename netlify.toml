@@ -1,7 +1,7 @@
 [build]
 base="HKN"
 commond="npm run build:prod"
-public="dist/"
+public="dist/browser"
 
 [[redirects]]
 from="/*"

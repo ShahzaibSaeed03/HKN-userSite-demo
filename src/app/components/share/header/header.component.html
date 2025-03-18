@@ -1,12 +1,12 @@
-<header class="bg-blacks text-white px-6 py-1 md:px-20 md:py-1">
+<header class="bg-blacks text-white px-6 py-1  md:px-20 ">
     <div class="container  flex justify-between items-center ">
       <!-- Logo -->
-      <nav class="hidden md:flex space-x-6">
+      <nav class="hidden md:flex ">
         <ul class="flex space-x-6">
-            <li><a routerLink="/about-us" class="hover:text-gray-300 text-xl font-semibold">Home</a></li>
+            <li><a routerLink="/about-us" class="hover:text-gray-300 text-[16px] font-semibold">Home</a></li>
           <!-- News Dropdown -->
           <li class="relative group" (mouseenter)="isDropdownOpen = true" (mouseleave)="isDropdownOpen = false">
-            <button class="hover:text-gray-300 font-semibold flex items-center text-xl">
+            <button class="hover:text-gray-300 font-semibold flex items-center text-[16px]">
               News
               <svg class="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
@@ -46,7 +46,7 @@
       
 
 
-      <a routerLink="/" class=" font-bold"><img src="logo.png" alt="" class="h-16"></a>
+      <a routerLink="/" class=" font-bold"><img src="logo.png" alt="" class="md:w-[150px] md:h-[65px]  w-[110px] h-[50px]"></a>
   
      
   
@@ -54,7 +54,7 @@
      
 
       <div class="user">
-        <i class="fa-solid fa-user text-3xl"></i>
+        <i class="fa-solid fa-user text-[25px]"></i>
       </div>
     </div>
   
@@ -70,7 +70,7 @@
         <!-- Mobile Dropdown for News -->
          <li>
             
-      <a routerLink="/" class=" font-bold"><img src="logo.png" alt="" class="h-10"></a>
+      <a routerLink="/" class=" font-bold"><img src="logo.png" alt="" class="h-12"></a>
          </li>
       <li class="">
 <a class="w-full text-left flex justify-between items-center">Home</a>      </li>
