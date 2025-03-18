@@ -4,10 +4,11 @@ import { CarouselComponent } from "./components/carousel/carousel.component";
 import { AllNewsComponent } from "./components/all-news/all-news.component";
 import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from "./components/share/header/header.component";
+import { ArticleComponent } from "./components/article/article.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HomeComponent, HeaderComponent],
+  imports: [RouterOutlet, HomeComponent, HeaderComponent, ArticleComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
