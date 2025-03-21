@@ -53,7 +53,7 @@
       <!-- Navigation (Desktop) -->
      
 
-      <div class="user">
+      <div class="user" routerLink="/login">
         <i class="fa-solid fa-user text-[25px]"></i>
       </div>
     </div>
@@ -72,8 +72,8 @@
             
       <a routerLink="/" class=" font-bold"><img src="logo.png" alt="" class="h-12"></a>
          </li>
-      <li class="">
-<a class="w-full text-left flex justify-between items-center">Home</a>      </li>
+      <li class="" routerLink="/home">
+<a class="w-full text-left flex justify-between items-center" >Home</a>      </li>
       
         <li>
           <button class="w-full text-left  flex justify-between items-center" (click)="toggleMobileDropdown()">
