@@ -3,6 +3,7 @@ import { ArticleComponent } from './components/article/article.component';
 import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/authentication/login/login.component';
 import { RegisterComponent } from './components/authentication/register/register.component';
+import { VideoNewsComponent } from './components/video-news/video-news.component';
 
 export const routes: Routes = [
     {
@@ -13,6 +14,9 @@ export const routes: Routes = [
     {
         path: 'home',
         component: HomeComponent
+    },
+    {path:"video-news",
+        component:VideoNewsComponent
     },
     {
         path: 'article',

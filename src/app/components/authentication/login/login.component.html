@@ -1,27 +1,43 @@
 <div class="flex items-center justify-center min-h-screen bg-white text-black p-4">
-    <div class="bg-gray-100 p-8 rounded-lg shadow-lg flex flex-col md:flex-row max-w-4xl w-full">
+    <div class="bg-blacks p-8 rounded-lg shadow-lg flex flex-col md:flex-row max-w-4xl w-full">
         <!-- Left Section -->
         <div class="md:w-1/2 w-full p-6 flex flex-col items-center justify-center">
-            <p class="text-[80px] tracking-[-0.8rem] font-bold font-sans">HKN</p>
+            <p class="text-[80px] tracking-[-0.8rem] font-bold text-white  font-sans">HKN</p>
             <p class="text-center text-gray-600">Welcome back</p>
         </div>
 
         <!-- Right Section -->
-        <div class="md:w-1/2 w-full p-6">
+        <div class="md:w-1/2 w-full ">
             <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
-            <form>
-                <div class="mb-4">
-                    <label class="block text-gray-700"><i class="fas fa-envelope mr-2 text-black"></i>Email</label>
-                    <input type="email" class="w-full p-2 rounded bg-gray-200 text-black" placeholder="Enter email">
+            <form #form="ngForm" (ngSubmit)="loginUser(form)" class="space-y-4">
+                <div>
+                    <label class="block text-white">Email</label>
+                    <input type="email" [(ngModel)]="user.email" name="email" required email
+                           class="w-full p-2 rounded bg-gray-100 text-gray-400" placeholder="Enter email"
+                           #email="ngModel">
+                    <p class="text-red-500 text-sm" *ngIf="email.invalid && email.touched">
+                        Enter a valid email.
+                    </p>
                 </div>
-                <div class="mb-4">
-                    <label class="block text-gray-700"><i class="fas fa-lock mr-2 text-black"></i>Password</label>
-                    <input type="password" class="w-full p-2 rounded bg-gray-200 text-black" placeholder="Enter password">
+
+                <div>
+                    <label class="block text-white">Password</label>
+                    <input type="password" [(ngModel)]="user.password" name="password" required minlength="6"
+                           class="w-full p-2 rounded bg-gray-100 text-gray-400" placeholder="Enter password"
+                           #password="ngModel">
+                    <p class="text-red-500 text-sm" *ngIf="password.invalid && password.touched">
+                        Password must be at least 6 characters.
+                    </p>
                 </div>
-                <button class="w-full bg-black p-2 rounded text-white hover:bg-gray-800">Login</button>
+
+                <button type="submit" [disabled]="form.invalid"
+                        class="w-full bg-white p-2 rounded text-black hover:bg-gray-800 disabled:opacity-50">
+                    Login
+                </button>
             </form>
-            <p class="mt-4 text-center text-gray-600">Don't have an account? 
-                <a routerLink="/register" class="text-black font-bold hover:underline">Register here</a>
+
+            <p class="mt-4 text-center text-gray-200">Don't have an account? 
+                <a routerLink="/register" class="text-white font-bold hover:underline">Register here</a>
             </p>
         </div>
     </div>

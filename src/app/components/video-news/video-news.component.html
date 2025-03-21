@@ -1,0 +1,204 @@
+<div class="container mx-auto  md:p-12 flex flex-wrap md:flex-nowrap gap-8 text-black text-family" >
+    <!-- Main News Section -->
+    <div class="w-full md:w-[70%] p-1 ">
+       
+        <video class="w-full h-64 md:h-96 mt-4 mb-4 rounded-lg object-cover" autoplay loop muted controls>
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        
+        <h1 class="text-xl font-[700] md:font-[700] text-black leading-tight">
+            Presidential Pardons Questioned Over Autopen Signature Controversy, Raising Legal and Ethical Concerns
+        </h1>
+        <div class="flex gap-5 mt-4">
+            <p class="text-gray-600">By: <span class="font-semibold text-black">Drake Lie</span></p>
+            <p class="text-gray-600">873627628 Views</p>
+            <p class="text-gray-600">March 22 2025</p>
+ </div>
+ <div class="like-section w-full flex flex-col-reverse sm:flex-row items-start  justify-between gap-3 mt-4">
+    <!-- Description Section -->
+    <div class="description w-full sm:w-[70%]">
+        <p class="text-sm sm:text-base leading-relaxed">
+            President Donald Trump announced Monday that he is voiding all pardons issued by former President Joe Biden that were authorized using an autopen.
+             <span *ngIf="showDescription" class="mt-8 leading-relaxed description">
+                <p >
+                    President Donald Trump announced Monday that he is voiding all pardons issued by former President Joe Biden that were authorized using an autopen. Trump claimed the pardons were invalid because Biden did not personally sign them or fully understand the documents before approval.
+                </p>
+                <p>
+                    President Donald Trump announced Monday that he is voiding all pardons issued by former President Joe Biden that were authorized using an autopen.
+                </p>
+                <p>
+                    Trump claimed the pardons were invalid because Biden did not personally sign them or fully understand the documents before approval.
+                </p>
+                <p>
+                    Legal experts and scholars are debating the legitimacy of this decision, with some arguing that it could set a precedent for future administrations.
+                </p>
+                <p>
+                    Many believe that this move will lead to legal battles, as Biden’s legal team has stated that all pardons were properly authorized under existing laws.
+                </p>
+            </span> 
+        </p>
+    </div>
+
+    <!-- Buttons Section -->
+    <div class="buttons w-full sm:w-[30%] flex justify-between sm:justify-around items-center bg-gray-100 sm:bg-transparent p-2 sm:p-0 rounded-lg text-lg">
+        <span class="flex items-center gap-1 cursor-pointer" (click)="toggleLike()">
+            <i class="{{ liked ? 'fa-solid fa-thumbs-up' : 'fa-regular fa-thumbs-up' }}"></i> 33k
+        </span>
+        <span class="flex items-center gap-1 cursor-pointer" (click)="toggleDislike()">
+            <i class="{{ disliked ? 'fa-solid fa-thumbs-down' : 'fa-regular fa-thumbs-down' }}"></i> 804
+        </span>
+        
+      
+
+        <span class="share-btn cursor-pointer flex items-center gap-1 " (click)="togglePopup()">
+            <i class="fa-solid fa-share-nodes"></i> Share
+        </span>
+    </div>
+    
+</div>
+
+           
+<div class="flex justify-between items-center mt-6">
+    <div class="flex gap-8 sm:gap-9 text-4xl sm:text-4xl">
+        <span>
+            <i class="fa-brands fa-instagram"></i>
+        </span>
+        <span>
+            <i class="fa-brands fa-square-facebook"></i>
+        </span>
+        <span>
+            <i class="fa-brands fa-square-x-twitter"></i>
+        </span>
+    </div>
+
+    <button (click)="showDescription = !showDescription"
+        class="Readmore bg-black rounded-full text-white px-2 py-1 text-[12px] sm:text-md hover:bg-gray-800 transition duration-300"
+        [innerHTML]="showDescription ? 'Read less <i class=\'fa-solid fa-chevron-up\'></i>' : 'Read more <i class=\'fa-solid fa-chevron-down\'></i>'">
+    </button>
+</div>
+
+        
+        
+      
+
+        
+
+    </div>
+
+    <!-- Trending Videos Sidebar -->
+    <div class="w-full md:w-[30%] ">
+        <h2 class="text-2xl text-center font-bold text-black mb-3">More News</h2>
+        <div class="flex flex-row gap-1 items-center  overflow-hidden  py-2">
+            <img src="https://picsum.photos/101" alt="Video Thumbnail" class="w-full  h-28 object-cover rounded">
+            <div class="w-full h-28  sm:w-2/3 text-left font-semibold flex flex-col justify-between px-1  ">
+                <p class="text-black  md:text-[12px] text-[16px] overflow-hidden font-semibold">
+                    Should WNBA Stars Get NBA Level Salaries? Man Sparks Debate on Women’s Basketball Pay.                    </p>
+                <div class="flex justify-between items-center text-sm font-normal ">
+                    <div>
+                        <i class="fa-regular fa-eye "></i> 308
+                    </div> 
+
+                    <div>
+                        <i class="fa-regular fa-clock mr-1"></i> 1h ago
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-row gap-1 items-center  overflow-hidden  py-2">
+            <img src="https://picsum.photos/101" alt="Video Thumbnail" class="w-full  h-28 object-cover rounded">
+            <div class="w-full h-28  sm:w-2/3 text-left font-semibold flex flex-col justify-between px-1  ">
+                <p class="text-black  md:text-[12px] text-[16px] overflow-hidden font-semibold">
+                    Should WNBA Stars Get NBA Level Salaries? Man Sparks Debate on Women’s Basketball Pay.                    </p>
+                <div class="flex justify-between items-center text-sm font-normal ">
+                    <div>
+                        <i class="fa-regular fa-eye "></i> 308
+                    </div> 
+
+                    <div>
+                        <i class="fa-regular fa-clock mr-1"></i> 1h ago
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-row gap-1 items-center  overflow-hidden  py-2">
+            <img src="https://picsum.photos/301" alt="Video Thumbnail" class="w-full  h-28 object-cover rounded">
+            <div class="w-full h-28  sm:w-2/3 text-left font-semibold flex flex-col justify-between px-1  ">
+                <p class="text-black  md:text-[12px] text-[16px] overflow-hidden font-semibold">
+                    Should WNBA Stars Get NBA Level Salaries? Man Sparks Debate on Women’s Basketball Pay.                    </p>
+                <div class="flex justify-between items-center text-sm font-normal ">
+                    <div>
+                        <i class="fa-regular fa-eye "></i> 308
+                    </div> 
+
+                    <div>
+                        <i class="fa-regular fa-clock mr-1"></i> 1h ago
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-row gap-1 items-center  overflow-hidden  py-2">
+            <img src="https://picsum.photos/121" alt="Video Thumbnail" class="w-full  h-28 object-cover rounded">
+            <div class="w-full h-28  sm:w-2/3 text-left font-semibold flex flex-col justify-between px-1  ">
+                <p class="text-black  md:text-[12px] text-[16px] overflow-hidden font-semibold">
+                    Should WNBA Stars Get NBA Level Salaries? Man Sparks Debate on Women’s Basketball Pay.                    </p>
+                <div class="flex justify-between items-center text-sm font-normal ">
+                    <div>
+                        <i class="fa-regular fa-eye "></i> 308
+                    </div> 
+
+                    <div>
+                        <i class="fa-regular fa-clock mr-1"></i> 1h ago
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+    </div>
+</div>
+
+
+<div *ngIf="showPopup" class="fixed inset-0 bg-black opacity-50 z-40"></div>
+
+<!-- Popup (Shows only when showPopup is true) -->
+<div *ngIf="showPopup" class="popup-container fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-xl shadow-lg p-4  w-80 text-center z-50">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-3">
+        <h2 class="text-sm font-medium">Share with</h2>
+        <button (click)="togglePopup()" class="text-gray-600 hover:text-gray-800">
+            <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+    </div>
+
+    <!-- Icons Section -->
+    <div class="flex justify-around items-center">
+        <div class="flex flex-col items-center">
+            <div class="w-12 h-12 flex justify-center items-center bg-gray-200 rounded-full">
+                <i class="fa-brands fa-whatsapp text-2xl text-green-600"></i>
+            </div>
+            <p class="mt-1 text-xs">WhatsApp</p>
+        </div>
+
+        <div class="flex flex-col items-center">
+            <div class="w-12 h-12 flex justify-center items-center bg-gray-200 rounded-full">
+                <i class="fa-brands fa-facebook-f text-2xl text-blue-600"></i>
+            </div>
+            <p class="mt-1 text-xs">Facebook</p>
+        </div>
+
+        <div class="flex flex-col items-center">
+            <div class="w-12 h-12 flex justify-center items-center bg-gray-200 rounded-full">
+                <i class="fa-regular fa-comment-dots text-2xl text-gray-600"></i>
+            </div>
+            <p class="mt-1 text-xs">Text</p>
+        </div>
+
+        <div class="flex flex-col items-center">
+            <div class="w-12 h-12 flex justify-center items-center bg-gray-200 rounded-full">
+                <i class="fa-solid fa-link text-2xl text-gray-600"></i>
+            </div>
+            <p class="mt-1 text-xs">Link</p>
+        </div>
+    </div>
+</div>
