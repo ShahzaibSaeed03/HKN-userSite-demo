@@ -1,9 +1,0 @@
-[build]
-base="HKN"
-commond="npm run build:prod"
-public="dist/browser"
-
-[[redirects]]
-from="/*"
-to="/index.html"
-status=200
