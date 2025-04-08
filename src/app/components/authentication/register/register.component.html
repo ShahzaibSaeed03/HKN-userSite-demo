@@ -41,7 +41,7 @@
                     </p>
                 </div>
 
-                <div>
+                <!-- <div>
                     <label class="block text-white">Confirm Password</label>
                     <input type="password" [(ngModel)]="user.confirmPassword" name="confirmPassword" required
                            class="w-full p-2 rounded bg-gray-100 text-gray-400" placeholder="Confirm password"
@@ -49,9 +49,9 @@
                     <p class="text-red-500 text-sm" *ngIf="user.password !== user.confirmPassword && confirmPassword.touched">
                         Passwords do not match.
                     </p>
-                </div>
+                </div> -->
 
-                <div>
+                <!-- <div>
                     <label class="block text-white">Gender</label>
                     <select [(ngModel)]="user.gender" name="gender" required class="w-full p-2 rounded bg-gray-100 text-gray-400"
                             #gender="ngModel">
@@ -63,9 +63,9 @@
                     <p class="text-red-500 text-sm" *ngIf="gender.invalid && gender.touched">
                         Gender is required.
                     </p>
-                </div>
+                </div> -->
 
-                <div>
+                <!-- <div>
                     <label class="block text-white">Date of Birth</label>
                     <input type="date" [(ngModel)]="user.dob" name="dob" required
                            class="w-full p-2 rounded bg bg-gray-100 text-gray-400" 
@@ -73,7 +73,7 @@
                     <p class="text-red-500 text-sm" *ngIf="dob.invalid && dob.touched">
                         Date of birth is required.
                     </p>
-                </div>
+                </div> -->
 
                 <button type="submit" [disabled]="form.invalid"
                         class="w-full bg-white p-2 rounded text-black hover:bg-gray-800 disabled:opacity-50">

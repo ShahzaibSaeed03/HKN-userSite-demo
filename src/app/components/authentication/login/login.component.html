@@ -22,7 +22,7 @@
 
                 <div>
                     <label class="block text-white">Password</label>
-                    <input type="password" [(ngModel)]="user.password" name="password" required minlength="6"
+                    <input type="password" [(ngModel)]="user.password" name="password" required minlength="5"
                            class="w-full p-2 rounded bg-gray-100 text-gray-400" placeholder="Enter password"
                            #password="ngModel">
                     <p class="text-red-500 text-sm" *ngIf="password.invalid && password.touched">

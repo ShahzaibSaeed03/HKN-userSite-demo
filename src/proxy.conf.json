@@ -1,0 +1,7 @@
+{
+    "/api": {
+      "target": "https://new.hardknocknews.tv",
+      "secure": true,
+      "changeOrigin": true
+    }
+  }

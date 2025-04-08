@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { HttpRequestService } from '../service/http-request.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  imports: [RouterLink, FormsModule,CommonModule],
+  standalone: true,
+  imports: [FormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -16,17 +17,26 @@ export class LoginComponent {
     password: ''
   };
 
-  constructor(private httpRequestService: HttpRequestService) {}
+  constructor(private httpRequestService: HttpRequestService, private router: Router) {}
 
   loginUser(form: NgForm) {
     if (form.invalid) {
       return;
     }
-
+  
     this.httpRequestService.login(this.user).subscribe(
-      response => {
+      (response: any) => {
         console.log('Login successful', response);
         alert('Login successful!');
+  
+        // Store token in localStorage
+        localStorage.setItem('authToken', response.token);
+  
+        // Store user ID in localStorage
+        localStorage.setItem('userId', response.user.id.toString());
+  
+        // Navigate to the home page after login
+        this.router.navigate(['/home']);
       },
       error => {
         console.error('Error during login', error);
@@ -34,4 +44,5 @@ export class LoginComponent {
       }
     );
   }
+  
 }

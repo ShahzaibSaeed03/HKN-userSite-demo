@@ -1,13 +1,13 @@
-<div class="container mx-auto  md:p-12 flex flex-wrap md:flex-nowrap gap-8 text-black text-family" >
+<div class="container mx-auto p-2  md:p-12 flex flex-wrap md:flex-nowrap gap-8 text-black text-family" *ngIf="article">
     <!-- Main News Section -->
     <div class="w-full md:w-[70%] p-1">
         <h1 class="text-3xl md:text-[40px] font-[700] md:font-[700] text-black leading-tight">
-            Presidential Pardons Questioned Over Autopen Signature Controversy, Raising Legal and Ethical Concerns        </h1>
-        <img src="https://picsum.photos/190" alt="News Image" class="w-full h-64 md:h-96 mt-4 rounded-lg object-cover">
+            {{article.title}}    </h1>
+        <img *ngIf="thumbUrl" [src]="thumbUrl" alt="Article Thumbnail" alt="News Image" class="w-full h-64 md:h-96 mt-4 rounded-lg object-cover">
         <div class="mt-2  gap-2 text-gray-400 text-md">
             <div class="">By: <span class="text-black font-semibold">Alex Sparks</span> </div>
-            <div>Published: 4 hours ago</div>
-            <div>Modified: 1 hours ago</div>
+            <div>Published: {{ article.spdate }}</div>
+            <div>Modified:    {{ calculateTimeAgo(article.updated_at) }}</div>
 
         </div>
         <div class="flex gap-5 text-2xl mt-2 text-black ">
@@ -16,41 +16,28 @@
             <span class="share-btn cursor-pointer" (click)="togglePopup()">
                 <i class="fa-solid fa-share-nodes"></i>
             </span>        </div>
-        <p class="mt-4 leading-relaxed">
-            President Donald Trump announced Monday that he is voiding all pardons issued by former President Joe Biden that were authorized using an autopen. Trump claimed the pardons were invalid because Biden did not personally sign them or fully understand the documents before approval.
-        </p>
 
-        <h2 class="  mt-6">Legal and Political Fallout</h2>
-        <p class="mt-2 leading-relaxed">
-            Legal experts are now debating whether Trump has the constitutional authority to retroactively revoke pardons issued by a former president. Some argue that once a pardon is granted, it cannot be undone without due process, while others claim that if the process itself was flawed, the president may have grounds to challenge it.
-        </p>
-        <p class="mt-2 leading-relaxed">
-            Meanwhile, the Department of Justice is reportedly reviewing the situation, with sources indicating that a legal battle could be imminent. If the decision is challenged in court, it could lead to a 
-            <span class="font-semibold">landmark Supreme Court case</span> that defines the limits of executive power regarding clemency.
-        </p>
 
-        <h2 class="  mt-6">Impact on Those Affected</h2>
-        <p class="mt-2 leading-relaxed">
-            Among those impacted by the revocation are <span class="">several high-profile individuals</span>, including political allies, whistleblowers, and nonviolent offenders who had been granted clemency under Biden’s administration. Many have expressed 
-            <span class="">shock and outrage</span>, with some vowing to fight the decision legally.
-        </p>
-        <p class="mt-2 leading-relaxed">
-            Civil rights groups have condemned the move, arguing that it sets a dangerous precedent where 
-            <span class="italic">presidential pardons can be undone based on political motives</span>. “This is not about justice; this is about control,” said one attorney representing a former prisoner whose pardon was revoked.
-        </p>
+            <div *ngIf="article?.entries?.length">
+                <div *ngFor="let entry of article.entries">
+                  <div [innerHTML]="entry.body" class="mt-4 leading-relaxed"></div>
+                </div>
+              </div>
 
-        <h2 class="  mt-6">White House Response & Future Implications</h2>
-        <p class="mt-2 leading-relaxed">
-            The Biden administration has yet to issue an official statement, but sources indicate that legal advisors are 
-            <span class="font-semibold">exploring countermeasures</span> to prevent the revocations from taking effect. Some lawmakers have called for emergency legislation to clarify the rules regarding presidential clemency.
-        </p>
-        <p class="mt-2 leading-relaxed">
-            With tensions escalating, political analysts suggest that this move may not only impact those immediately affected but could also <span class="font-semibold">reshape presidential authority</span> for future administrations. If upheld, the decision could create a precedent where every incoming president has the ability to overturn pardons from previous administrations, leading to <span class="font-semibold">a new era of legal uncertainty</span> in the U.S. justice system.
-        </p>
 
-        <p class="mt-6 text-gray-500 italic">
-            As the situation unfolds, all eyes remain on the courts, where this battle could soon take center stage in what many are calling <span class="font-semibold">one of the most consequential legal fights in recent political history</span>.
-        </p>
+              <!-- <div *ngFor="let imageUrl of extraImageUrls">
+                <img [src]="imageUrl" alt="Extra Image" class="w-full h-64 md:h-96 mt-4 rounded-lg object-cover"/>
+              </div> -->
+             <!-- Display Tags -->
+<div class="tags" *ngIf="tags && tags.length > 0">
+    <span *ngFor="let tag of tags" class="tag">
+      {{ tag.name }}  <!-- Display the name of each tag -->
+    </span>
+  </div>
+  
+             <app-like-dislike></app-like-dislike> 
+<app-comment></app-comment>
+   
     </div>
 
     <!-- Trending Videos Sidebar -->

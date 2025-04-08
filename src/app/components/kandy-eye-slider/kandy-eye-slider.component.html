@@ -1,0 +1,26 @@
+<div class="relative w-full max-w-5xl mx-auto mb-4 ">
+
+    <!-- Left Button -->
+    <button (click)="prevSlide()" class="absolute left-2 top-1/2 transform -translate-y-1/2 p-2 bg-black text-white rounded-full shadow-md z-10">
+      &#10094;
+    </button>
+  
+    <!-- Slider Container -->
+    <div class="overflow-hidden">
+      <div class="flex transition-transform duration-300" [style.transform]="'translateX(' + translateX + '%)'">
+        <div *ngFor="let card of cards" class="flex-shrink-0 px-2" routerLink="/video-news"
+             [ngClass]="{'w-1/5': visibleCards === 5, 'w-1/3': visibleCards === 3, 'w-1/2': visibleCards === 2}">
+          <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-2">
+            <img [src]="card.image" class="w-full h-40 object-cover">
+            <div class="p-2 text-center font-semibold">{{ card.title }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Right Button -->
+    <button (click)="nextSlide()" class="absolute right-2 top-1/2 transform -translate-y-1/2 p-2 bg-black text-white rounded-full shadow-md z-10">
+      &#10095;
+    </button>
+  </div>
+  

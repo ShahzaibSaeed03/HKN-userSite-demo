@@ -1,24 +1,131 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, Renderer2 } from '@angular/core';
+import { Component, HostListener, OnInit, Renderer2 } from '@angular/core';
+import { ArticleService } from '../service/article.service';
+import { ActivatedRoute } from '@angular/router';
+import { CommentComponent } from '../comment-control/comment/comment.component';
+import { LikeDislikeComponent } from "../share/like-dislike/like-dislike.component";
 
 @Component({
   selector: 'app-article',
-  imports: [CommonModule],
+  imports: [CommonModule, CommentComponent, LikeDislikeComponent],
   templateUrl: './article.component.html',
   styleUrl: './article.component.css'
 })
-export class ArticleComponent {
+export class ArticleComponent implements OnInit {
+  private baseUrl = 'https://new.hardknocknews.tv/upload/media/posts';
+  article: any;
+  thumbUrl: string | null = null;
+  extraImageUrls: string[] = [];
   showPopup = false;
+  tags: { id: number; name: string; slug: string; icon: string | null; color: string | null }[] = [];
 
-  constructor(private renderer: Renderer2) {}
+  constructor(
+    private renderer: Renderer2,
+    private articleService: ArticleService,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    this.article = this.articleService.getSelectedArticle();
+
+    if (this.article) {
+      this.setThumbUrl(this.article.thumb);
+      this.setExtraImages(this.article.entries);
+      this.tags = this.article.tags;
+      console.log(this.article);
+
+      // Calculate the time difference for the spdate
+      this.article.spdate = this.calculateTimeAgo(this.article.spdate);
+    } else {
+      this.route.params.subscribe(params => {
+        this.articleService.getsinglepost(params['type'], params['slug']).subscribe(data => {
+          this.article = data;
+          this.setThumbUrl(data.thumb);
+          this.setExtraImages(data.entries);
+          this.tags = data.tags;
+          console.log(this.article);
+
+          // Calculate the time difference for the spdate
+          this.article.spdate = this.calculateTimeAgo(data.spdate);
+        });
+      });
+    }
+  }
+
+  // Calculate the time difference in a human-readable format (e.g., "3 hours ago")
+  calculateTimeAgo(dateString: string): string {
+    const now = new Date();
+    const date = new Date(dateString);
+    
+    const seconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    const months = Math.floor(days / 30);
+    const years = Math.floor(days / 365);
+  
+    // If the time difference is more than a year
+    if (years > 0) {
+      return `${years} year${years > 1 ? 's' : ''} ago`;
+    }
+    // If the time difference is more than a month but less than a year
+    else if (months > 0) {
+      return `${months} month${months > 1 ? 's' : ''} ago`;
+    }
+    // If the time difference is more than a day but less than 30 days
+    else if (days > 0) {
+      return `${days} day${days > 1 ? 's' : ''} ago`;
+    }
+    // If the time difference is more than an hour but less than a day
+    else if (hours > 0) {
+      return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+    }
+    // If the time difference is more than a minute but less than an hour
+    else if (minutes > 0) {
+      return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+    }
+    // If the time difference is less than a minute
+    else {
+      return `${seconds} second${seconds > 1 ? 's' : ''} ago`;
+    }
+  }
+  
+
+  setThumbUrl(thumb: string) {
+    if (!thumb) return;
+
+    const cleanThumb = thumb.replace(/(-s|-m|-l)?\.jpg$/, '');
+    this.thumbUrl = cleanThumb.startsWith('http')
+      ? `${cleanThumb}-s.jpg`
+      : `${this.baseUrl}/${cleanThumb}-s.jpg`;
+    console.log('Thumbnail Image URL:', this.thumbUrl);
+  }
+
+  setExtraImages(entries: any[]) {
+    if (!entries || entries.length === 0) return;
+
+    entries.forEach((entry: any) => {
+      if (entry.type === 'image' && entry.image) {
+        const imageUrl = this.setImageUrl(entry.image);
+        this.extraImageUrls.push(imageUrl);
+      }
+    });
+  }
+
+  setImageUrl(image: string): string {
+    if (!image) return '';
+    
+    const cleanImage = image.replace(/(-s|-m|-l)?\.jpg$/, '');
+    return cleanImage.startsWith('http')
+      ? `${cleanImage}-s.jpg`
+      : `${this.baseUrl}/${cleanImage}-s.jpg`;
+  }
 
   togglePopup() {
     this.showPopup = !this.showPopup;
-    if (this.showPopup) {
-      this.renderer.addClass(document.body, 'blur-bg');
-    } else {
-      this.renderer.removeClass(document.body, 'blur-bg');
-    }
+    this.showPopup
+      ? this.renderer.addClass(document.body, 'blur-bg')
+      : this.renderer.removeClass(document.body, 'blur-bg');
   }
 
   @HostListener('document:click', ['$event'])

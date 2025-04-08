@@ -15,13 +15,11 @@ export const routes: Routes = [
         path: 'home',
         component: HomeComponent
     },
-    {path:"video-news",
+    {path:"video-news/:type/:slug",
         component:VideoNewsComponent
     },
-    {
-        path: 'article',
-        component: ArticleComponent
-    },
+    { path: 'article/:type/:slug', component: ArticleComponent },
+
     {
         path: 'login',
         component: LoginComponent

@@ -62,8 +62,8 @@
 
     
     <!-- Mobile Menu (Sliding Sidebar) -->
-    <div class="fixed top-0 left-0 w-full h-fit min-h-40  bg-blacks text-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out"
-         [ngClass]="{'-translate-y-full': !isMenuOpen, 'translate-y-0': isMenuOpen}">
+    <div class="fixed top-0 left-0 w-full h-full   bg-blacks text-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out"
+         [ngClass]="{'-translate-x-full': !isMenuOpen, 'translate-x-0': isMenuOpen}">
       <button class="absolute top-4 right-4 text-2xl" (click)="toggleMenu()">&times;</button>
       
       <ul class="mt-5 space-y-4 px-6">
