@@ -47,20 +47,21 @@ setSelectedArticle(article: any) {
         console.log('API Response:', response);
   
         if (response && Array.isArray(response.posts)) {
-          let formattedPosts = response.posts.map((post: any) => {
+          this.news = response.posts.map((post: any) => {
             const updatedThumb = post.thumb ? `${this.baseUrl}/${post.thumb}-s.jpg` : null;
             return {
               ...post,
               thumb: updatedThumb,
-              relativeTime: this.getRelativeTime(post.spdate),
+              relativeTime: this.getRelativeTime(post.spdate), // Add relative time to each post
             };
           });
   
-          // Shuffle posts randomly
-          formattedPosts = formattedPosts.sort(() => 0.5 - Math.random());
-  
-          // Pick first 10 posts only
-          this.news = formattedPosts.slice(0, 10);
+          // Sort the news array by the spdate (latest date first)
+          this.news.sort((a, b) => {
+            const dateA = new Date(a.spdate).getTime();
+            const dateB = new Date(b.spdate).getTime();
+            return dateB - dateA; // Sort in descending order
+          });
         } else {
           console.error('Invalid API response format:', response);
           this.news = [];
@@ -70,35 +71,35 @@ setSelectedArticle(article: any) {
     });
   }
   
-  getTranding(): void {
-    this.httpArticle.getArticle().subscribe({
-      next: (response) => {
-        console.log('API Response:', response);
+  // getTranding(): void {
+  //   this.httpArticle.getArticle().subscribe({
+  //     next: (response) => {
+  //       console.log('API Response:', response);
   
-        if (response && Array.isArray(response.posts)) {
-          let formattedPosts = response.posts.map((post: any) => {
-            const updatedThumb = post.thumb ? `${this.baseUrl}/${post.thumb}-s.jpg` : null;
-            return {
-              ...post,
-              thumb: updatedThumb,
-              relativeTime: this.getRelativeTime(post.spdate),
-              views: post.popularity_stats?.all_time_stats || 0 // fallback if null
-            };
-          });
+  //       if (response && Array.isArray(response.posts)) {
+  //         let formattedPosts = response.posts.map((post: any) => {
+  //           const updatedThumb = post.thumb ? `${this.baseUrl}/${post.thumb}-s.jpg` : null;
+  //           return {
+  //             ...post,
+  //             thumb: updatedThumb,
+  //             relativeTime: this.getRelativeTime(post.spdate),
+  //             views: post.popularity_stats?.all_time_stats || 0 // fallback if null
+  //           };
+  //         });
   
-          // Sort by views descending
-          formattedPosts = formattedPosts.sort((a:any, b:any) => b.views - a.views);
+  //         // Sort by views descending
+  //         formattedPosts = formattedPosts.sort((a:any, b:any) => b.views - a.views);
   
-          // Pick top 10 most viewed posts
-          this.news = formattedPosts.slice(0, 10);
-        } else {
-          console.error('Invalid API response format:', response);
-          this.news = [];
-        }
-      },
-      error: (error) => console.error('Error fetching articles:', error),
-    });
-  }
+  //         // Pick top 10 most viewed posts
+  //         this.news = formattedPosts.slice(0, 10);
+  //       } else {
+  //         console.error('Invalid API response format:', response);
+  //         this.news = [];
+  //       }
+  //     },
+  //     error: (error) => console.error('Error fetching articles:', error),
+  //   });
+  // }
   
   
   getPost(type: string, slug: string, article: any) {

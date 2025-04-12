@@ -61,17 +61,14 @@ setSelectedArticle(article: any) {
         console.log('API Response:', response);
   
         if (response && Array.isArray(response.posts)) {
-          // Filter posts to include only those with type 'business'
-          this.news = response.posts
-            .filter((post: any) => post.type === 'business')
-            .map((post: any) => {
-              const updatedThumb = post.thumb ? `${this.baseUrl}/${post.thumb}-s.jpg` : null;
-              return {
-                ...post,
-                thumb: updatedThumb,
-                relativeTime: this.getRelativeTime(post.spdate), // Add relative time to each post
-              };
-            });
+          this.news = response.posts.map((post: any) => {
+            const updatedThumb = post.thumb ? `${this.baseUrl}/${post.thumb}-s.jpg` : null;
+            return {
+              ...post,
+              thumb: updatedThumb,
+              relativeTime: this.getRelativeTime(post.spdate), // Add relative time to each post
+            };
+          });
   
           // Sort the news array by the spdate (latest date first)
           this.news.sort((a, b) => {
