@@ -1,19 +1,16 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { formatDistanceToNowStrict, parseISO } from 'date-fns';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
+import { parseISO, formatDistanceToNowStrict } from 'date-fns';
 import { ArticleService } from '../service/article.service';
-import { KandyEyeSliderComponent } from "../kandy-eye-slider/kandy-eye-slider.component";
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-all-news',
-  standalone: true,
-  imports: [CommonModule, FontAwesomeModule, KandyEyeSliderComponent],
-  templateUrl: './all-news.component.html',
-  styleUrls: ['./all-news.component.css']
+  selector: 'app-celebirty',
+  imports: [CommonModule],
+  templateUrl: './celebirty.component.html',
+  styleUrl: './celebirty.component.css'
 })
-export class AllNewsComponent implements OnInit {
+export class CelebirtyComponent implements OnInit {
 
   news: any[] = [];
   mainImage: string = ''; // Stores the first news image
@@ -22,18 +19,7 @@ export class AllNewsComponent implements OnInit {
 
   constructor(private httpArticle:ArticleService , private router: Router) {}
 
-   heading: string[] = [
-    'Celebrity',
-    "Crime",
-    "Bussninss"
- 
-  ];
 
-
-
-  getHeading(index: number): string {
-    return this.heading[Math.floor(index / 8) % this.heading.length];
-  }
 
 setSelectedArticle(article: any) {
   this.httpArticle.setSelectedArticle(article);
@@ -54,31 +40,28 @@ setSelectedArticle(article: any) {
   
   private baseUrl = 'https://new.hardknocknews.tv/upload/media/posts';
 
-
+  
   getArticles(): void {
     this.httpArticle.getArticle().subscribe({
       next: (response) => {
         console.log('API Response:', response);
   
         if (response && Array.isArray(response.posts)) {
-          // Filter posts to include only those with type 'business'
-          this.news = response.posts
-            .filter((post: any) => post.type === 'business')
-            .map((post: any) => {
-              const updatedThumb = post.thumb ? `${this.baseUrl}/${post.thumb}-s.jpg` : null;
-              return {
-                ...post,
-                thumb: updatedThumb,
-                relativeTime: this.getRelativeTime(post.spdate), // Add relative time to each post
-              };
-            });
-  
-          // Sort the news array by the spdate (latest date first)
-          this.news.sort((a, b) => {
-            const dateA = new Date(a.spdate).getTime();
-            const dateB = new Date(b.spdate).getTime();
-            return dateB - dateA; // Sort in descending order
+          let formattedPosts = response.posts.map((post: any) => {
+            const updatedThumb = post.thumb ? `${this.baseUrl}/${post.thumb}-s.jpg` : null;
+            return {
+              ...post,
+              thumb: updatedThumb,
+              relativeTime: this.getRelativeTime(post.spdate),
+              views: post.popularity_stats?.all_time_stats || 0 // fallback if null
+            };
           });
+  
+          // Sort by views descending
+          formattedPosts = formattedPosts.sort((a:any, b:any) => b.views - a.views);
+  
+          // Pick top 10 most viewed posts
+          this.news = formattedPosts.slice(0, 16);
         } else {
           console.error('Invalid API response format:', response);
           this.news = [];
@@ -87,8 +70,6 @@ setSelectedArticle(article: any) {
       error: (error) => console.error('Error fetching articles:', error),
     });
   }
-  
-  
   
   
   getPost(type: string, slug: string, article: any) {

@@ -1,22 +1,45 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WriteCommentComponent } from "../write-comment/write-comment.component";
 import { CommonModule } from '@angular/common';
+import { CommentService } from '../service/comment.service';
 
 @Component({
   selector: 'app-comment',
-  imports: [WriteCommentComponent,CommonModule],
+  standalone: true,
+  imports: [WriteCommentComponent, CommonModule],
   templateUrl: './comment.component.html',
-  styleUrl: './comment.component.css'
+  styleUrls: ['./comment.component.css']
 })
-export class CommentComponent {
-  replyingTo: number | null = null;
+export class CommentComponent implements OnInit {
+  comments: any[] = [];
 
-  toggleReply(commentId: number) {
-    this.replyingTo = this.replyingTo === commentId ? null : commentId;
+  constructor(private commentService: CommentService) {}
+
+  ngOnInit(): void {
+    this.getCommentByPost(); // no need to pass commentId
   }
 
-  postReply(commentId: number) {
-    console.log("Reply posted to comment", commentId);
-    this.replyingTo = null; // Hide input after posting
+  getCommentByPost(): void {
+    this.commentService.getComments().subscribe(
+      response => {
+        console.log('Comments:', response);
+        this.comments = response ?? []; // assuming your API returns a data array
+      },
+      error => {
+        console.error('Failed to fetch comments:', error);
+      }
+    );
   }
+
+  getParsedUser(data: string): any {
+    try {
+      return JSON.parse(data);
+    } catch {
+      return {};
+    }
+  }
+
+  
+
+  
 }

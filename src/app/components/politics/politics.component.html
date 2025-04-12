@@ -1,0 +1,32 @@
+<ng-container *ngFor="let item of news; let i = index">
+    <div 
+    class="flex flex-row gap-1 items-center overflow-hidden py-2"
+    (click)="getPost(item.type, item.slug, item)"
+  >
+    <img 
+      [src]="item.thumb" 
+      alt="Video Thumbnail" 
+      class="w-full h-28 object-cover rounded"
+    >
+    
+    <div class="w-full h-28 sm:w-2/3 text-left font-semibold flex flex-col justify-between px-1">
+      <p class="text-black md:text-[12px] text-[16px] overflow-hidden font-semibold">
+        {{ item.title }}
+      </p>
+      
+      <div class="flex justify-between items-center text-sm font-normal">
+        <div>
+          <i class="fa-regular fa-eye"></i> {{item.popularity_stats.all_time_stats}}
+        </div>
+  
+        <div>
+          <i class="fa-regular fa-clock mr-1"></i> {{ item.relativeTime }}
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+    
+
+  </ng-container>

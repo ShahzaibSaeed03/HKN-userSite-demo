@@ -4,15 +4,17 @@ import { ArticleService } from '../service/article.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommentComponent } from '../comment-control/comment/comment.component';
 import { LikeDislikeComponent } from "../share/like-dislike/like-dislike.component";
+import { MoreNewsComponent } from '../more-news/more-news.component';
+import { TrandingNewsComponent } from "../tranding-news/tranding-news.component";
 
 @Component({
   selector: 'app-article',
-  imports: [CommonModule, CommentComponent, LikeDislikeComponent],
+  imports: [CommonModule, CommentComponent, LikeDislikeComponent, MoreNewsComponent, TrandingNewsComponent],
   templateUrl: './article.component.html',
   styleUrl: './article.component.css'
 })
 export class ArticleComponent implements OnInit {
-  private baseUrl = 'https://new.hardknocknews.tv/upload/media/posts';
+  private baseUrl = 'https://new.hardknocknews.tv';
   article: any;
   thumbUrl: string | null = null;
   extraImageUrls: string[] = [];
@@ -26,15 +28,14 @@ export class ArticleComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.article = this.articleService.getSelectedArticle();
-
-    if (this.article) {
+    // Check if there's an article in localStorage
+    const storedArticle = localStorage.getItem('selectedArticle');
+    if (storedArticle) {
+      this.article = JSON.parse(storedArticle); // Load the article from localStorage
       this.setThumbUrl(this.article.thumb);
       this.setExtraImages(this.article.entries);
       this.tags = this.article.tags;
       console.log(this.article);
-
-      // Calculate the time difference for the spdate
       this.article.spdate = this.calculateTimeAgo(this.article.spdate);
     } else {
       this.route.params.subscribe(params => {
@@ -44,13 +45,12 @@ export class ArticleComponent implements OnInit {
           this.setExtraImages(data.entries);
           this.tags = data.tags;
           console.log(this.article);
-
-          // Calculate the time difference for the spdate
           this.article.spdate = this.calculateTimeAgo(data.spdate);
         });
       });
     }
   }
+  
 
   // Calculate the time difference in a human-readable format (e.g., "3 hours ago")
   calculateTimeAgo(dateString: string): string {
@@ -103,15 +103,30 @@ export class ArticleComponent implements OnInit {
 
   setExtraImages(entries: any[]) {
     if (!entries || entries.length === 0) return;
-
+  
     entries.forEach((entry: any) => {
+      // Check if entry has an image
       if (entry.type === 'image' && entry.image) {
         const imageUrl = this.setImageUrl(entry.image);
         this.extraImageUrls.push(imageUrl);
+        console.log('Image URL:', imageUrl); // Log image URL
+      }
+  
+      // Check if entry has a video
+      if (entry.type === 'video' && entry.video) {
+        const videoUrl = this.setVideoUrl(entry.video);
+        console.log('Video URL:', videoUrl); // Log video URL
+      }
+  
+      // Check if entry has text (body)
+      if (entry.type === 'text' && entry.body) {
+        this.extraImageUrls.push(entry.body); // Store the body as part of extraImageUrls for rendering
+        console.log('Text Body:', entry.body); // Log the body content
       }
     });
   }
-
+  
+  
   setImageUrl(image: string): string {
     if (!image) return '';
     
@@ -120,6 +135,26 @@ export class ArticleComponent implements OnInit {
       ? `${cleanImage}-s.jpg`
       : `${this.baseUrl}/${cleanImage}-s.jpg`;
   }
+  
+  setVideoUrl(video: string): string {
+    if (!video) return '';
+  
+    // Check if video URL is relative or full
+    let finalVideoUrl = video.startsWith('http') ? video : `${this.baseUrl}/${video}`;
+  
+    // Encode the URL, but keep the slash (/) intact
+    finalVideoUrl = finalVideoUrl.replace(/[^a-zA-Z0-9\-._~:\/?#[\]@!$&'()*+,;=]/g, (match) => {
+      return '%' + match.charCodeAt(0).toString(16).toUpperCase();
+    });
+  
+    return finalVideoUrl;
+  }
+  
+  
+
+  
+
+ 
 
   togglePopup() {
     this.showPopup = !this.showPopup;

@@ -11,6 +11,7 @@ export class ArticleService {
   setSelectedArticle(article: any) {
     this.selectedArticle = article;
   }
+  
 
   getSelectedArticle() {
     return this.selectedArticle;

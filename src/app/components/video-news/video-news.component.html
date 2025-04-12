@@ -15,11 +15,11 @@
           {{article.title}}
         </h1>
         <div class="">
-            <div *ngIf="article?.entries?.length">
-                <div *ngFor="let entry of article.entries">
-                  <div [innerHTML]="entry.body" class=" text-sm sm:text-base mt-4 leading-relaxed" *ngIf="showDescription" class=" leading-relaxed description"></div>
-                </div>
-              </div>
+            <!-- <div *ngIf="article?.entries?.length"> -->
+                <!-- <div *ngFor="let entry of article.entries"> -->
+                  <div [innerHTML]="article.body" class=" text-sm sm:text-base mt-4 leading-relaxed" *ngIf="showDescription" class=" leading-relaxed description"></div>
+                <!-- </div> -->
+              <!-- </div> -->
             </div>
         <span (click)="showDescription = !showDescription"
                 class="Readmore  text-black mt-4  hover:bg-gray-800 transition duration-300"
@@ -58,78 +58,16 @@
         
       <app-comment></app-comment>
 
-        
+      <div class="more mt-3">
+    
+    <app-more-news></app-more-news>
+    </div>
 
     </div>
 
     <!-- Trending Videos Sidebar -->
     <div class="w-full md:w-[30%] ">
-        <h2 class="text-2xl text-center font-bold text-black mb-3">More News</h2>
-        <div class="flex flex-row gap-1 items-center  overflow-hidden  py-2">
-            <img src="https://picsum.photos/101" alt="Video Thumbnail" class="w-full  h-28 object-cover rounded">
-            <div class="w-full h-28  sm:w-2/3 text-left font-semibold flex flex-col justify-between px-1  ">
-                <p class="text-black  md:text-[12px] text-[16px] overflow-hidden font-semibold">
-                    Should WNBA Stars Get NBA Level Salaries? Man Sparks Debate on Women’s Basketball Pay.                    </p>
-                <div class="flex justify-between items-center text-sm font-normal ">
-                    <div>
-                        <i class="fa-regular fa-eye "></i> 308
-                    </div> 
-
-                    <div>
-                        <i class="fa-regular fa-clock mr-1"></i> 1h ago
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="flex flex-row gap-1 items-center  overflow-hidden  py-2">
-            <img src="https://picsum.photos/106" alt="Video Thumbnail" class="w-full  h-28 object-cover rounded">
-            <div class="w-full h-28  sm:w-2/3 text-left font-semibold flex flex-col justify-between px-1  ">
-                <p class="text-black  md:text-[12px] text-[16px] overflow-hidden font-semibold">
-                    Should WNBA Stars Get NBA Level Salaries? Man Sparks Debate on Women’s Basketball Pay.                    </p>
-                <div class="flex justify-between items-center text-sm font-normal ">
-                    <div>
-                        <i class="fa-regular fa-eye "></i> 308
-                    </div> 
-
-                    <div>
-                        <i class="fa-regular fa-clock mr-1"></i> 1h ago
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="flex flex-row gap-1 items-center  overflow-hidden  py-2">
-            <img src="https://picsum.photos/301" alt="Video Thumbnail" class="w-full  h-28 object-cover rounded">
-            <div class="w-full h-28  sm:w-2/3 text-left font-semibold flex flex-col justify-between px-1  ">
-                <p class="text-black  md:text-[12px] text-[16px] overflow-hidden font-semibold">
-                    Should WNBA Stars Get NBA Level Salaries? Man Sparks Debate on Women’s Basketball Pay.                    </p>
-                <div class="flex justify-between items-center text-sm font-normal ">
-                    <div>
-                        <i class="fa-regular fa-eye "></i> 308
-                    </div> 
-
-                    <div>
-                        <i class="fa-regular fa-clock mr-1"></i> 1h ago
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="flex flex-row gap-1 items-center  overflow-hidden  py-2">
-            <img src="https://picsum.photos/121" alt="Video Thumbnail" class="w-full  h-28 object-cover rounded">
-            <div class="w-full h-28  sm:w-2/3 text-left font-semibold flex flex-col justify-between px-1  ">
-                <p class="text-black  md:text-[12px] text-[16px] overflow-hidden font-semibold">
-                    Should WNBA Stars Get NBA Level Salaries? Man Sparks Debate on Women’s Basketball Pay.                    </p>
-                <div class="flex justify-between items-center text-sm font-normal ">
-                    <div>
-                        <i class="fa-regular fa-eye "></i> 308
-                    </div> 
-
-                    <div>
-                        <i class="fa-regular fa-clock mr-1"></i> 1h ago
-                    </div>
-                </div>
-            </div>
-        </div>
-
+<app-tranding-news></app-tranding-news>
         
     </div>
 </div>

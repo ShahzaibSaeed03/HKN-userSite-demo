@@ -2,23 +2,36 @@
   <p class="text-2xl font-bold text-center py-2">Trending News</p>
 
   <!-- News Slide Container -->
-  <div class="flex transition-transform duration-700 ease-in-out"
-       [ngStyle]="{ transform: 'translateX(-' + currentIndex * 100 + '%)' }">
-    <div *ngFor="let item of news" class="w-full flex-shrink-0 p-1 relative">
-      <img [src]="item.image" class="w-full h-64 md:h-80 object-cover rounded-lg bg-opacity-50 bg-gray-100" />
-
-      <!-- Tag & Title Positioned Properly -->
-      <div class="absolute inset-0 flex flex-col items-start justify-end p-4 space-y-2">
-       
-        <div class="text-white text-lg px-2 rounded bg-stone-600  font-semibold">
-          {{ item.title }}
-        </div>
-        <div class="bg-blacks px-2 py-1 rounded text-white text-md text-sm">
-          {{ item.tag }}
+  <div class="overflow-hidden w-full max-w-7xl mx-auto">
+    <div
+      class="flex transition-transform duration-700 ease-in-out"
+      [ngStyle]="{ transform: 'translateX(-' + currentIndex * 100 + '%)' }"
+    >
+      <div
+        *ngFor="let item of newss" (click)="getPost(item.type,item.slug , item)"
+        class="w-full  flex-shrink-0 p-1 relative"
+      >
+        <img
+          [src]="item.thumb"
+          class="w-full h-64 md:h-80  rounded-lg bg-opacity-50 bg-gray-100"
+        />
+  
+        <div
+          class="absolute inset-0 flex flex-col items-start justify-end px-4 py-2 space-y-1"
+        >
+          <div class="bg-black px-2 py-1 rounded text-white text-md text-sm">
+            {{ item.categories }}
+          </div>
+          <div
+            class="text-lg px-2 text-black rounded font-semibold bg-white opacity-70"
+          >
+            {{ item.title }}
+          </div>
         </div>
       </div>
     </div>
   </div>
+  
 
   <!-- Navigation Buttons -->
   <button (click)="prevSlide()" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-blacks text-white px-2 py-1 rounded">

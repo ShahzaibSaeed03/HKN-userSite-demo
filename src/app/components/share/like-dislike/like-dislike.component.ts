@@ -11,46 +11,47 @@ import { LikeServiceService } from '../service/like-service.service';
   styleUrl: './like-dislike.component.css'
 })
 export class LikeDislikeComponent implements OnInit {
-showPopup = false;
-article: any;
-reactions: any[] = []; // This would be replaced with your actual data
-selectedReactionIcon: string | null = null;
+  showPopup = false;
+  showDescription = false;
+  showReactions = true;
 
+  article: any;
+  reactions: any[] = [];
+  selectedReactionIcon: string | null = null;
 
+  liked: boolean = false;
+  disliked: boolean = false;
+
+  likeCount: number = 0;
 
   constructor(
     private renderer: Renderer2,
     private articleService: ArticleService,
     private route: ActivatedRoute,
-    private LikeServiceHttp:LikeServiceService
+    private LikeServiceHttp: LikeServiceService
   ) {}
 
   ngOnInit(): void {
-    this.article = this.articleService.getSelectedArticle();
-  
-    this.getLike();
-    if (this.article) {
-      // Check if reactions exist and if it's an array
+    const storedArticle = localStorage.getItem('selectedArticle');
+    if (storedArticle) {
+      this.article = JSON.parse(storedArticle);
       if (this.article.reactions && Array.isArray(this.article.reactions)) {
-        console.log('Reactions length:', this.article.reactions.length);
+        this.likeCount = this.article.reactions.length;
       }
     } else {
       this.route.params.subscribe(params => {
         this.articleService.getsinglepost(params['type'], params['slug']).subscribe(data => {
           this.article = data;
-  
-          // Assuming reactions are in data.reactions
           if (this.article.reactions && Array.isArray(this.article.reactions)) {
-            console.log('Reactions length:', this.article.reactions.length);
+            this.likeCount = this.article.reactions.length;
           }
+          localStorage.setItem('selectedArticle', JSON.stringify(data));
         });
       });
     }
+
+    this.getLike();
   }
-  
-
-
-
 
   togglePopup() {
     this.showPopup = !this.showPopup;
@@ -60,114 +61,94 @@ selectedReactionIcon: string | null = null;
       this.renderer.removeClass(document.body, 'blur-bg');
     }
   }
-  showDescription = false;  // Initially hidden
-
-
 
   @HostListener('document:click', ['$event'])
   closePopup(event: Event) {
     const target = event.target as HTMLElement;
-  
-    // Check if the click is outside the popup, share button, or like area
     if (
       !target.closest('.popup-container') &&
       !target.closest('.share-btn') &&
       !target.closest('.like-dislike')
     ) {
-      this.showPopup = false;
-      this.showReactions = false; // 👈 Hide reactions too
       this.renderer.removeClass(document.body, 'blur-bg');
     }
   }
-  
 
-
-  liked: boolean = false;
-disliked: boolean = false;
-
-toggleLike() {
+  toggleLike() {
     this.liked = !this.liked;
     if (this.liked) {
-        this.disliked = false; // Prevent both like and dislike from being active
+      this.disliked = false;
     }
-}
-
-toggleDislike() {
-    this.disliked = !this.disliked;
-    if (this.disliked) {
-        this.liked = false; // Prevent both like and dislike from being active
-    }
-}
-
-showReactions = false;
-
-addLike(): void {
-  this.liked = true;
-  this.disliked = false;
-  this.showReactions = true; // Show the reactions bar
-}
-
-sendReaction(reactionType: string): void {
-  const userId = localStorage.getItem('userId');
-  const postId = this.article.id;
-
-  const selected = this.reactions.find(r => r.reaction_type === reactionType);
-  if (selected) {
-    this.selectedReactionIcon = 'https://new.hardknocknews.tv' + selected.icon;
-
-    // ✅ Save per-post reaction in localStorage
-    const allReactions = JSON.parse(localStorage.getItem('postReactions') || '{}');
-    allReactions[postId] = reactionType;
-    localStorage.setItem('postReactions', JSON.stringify(allReactions));
   }
 
-  const data = {
-    user_id: userId,
-    post_id: postId,
-    reaction_type: reactionType
-  };
-
-  this.LikeServiceHttp.addReaction(data).subscribe(
-    (res: any) => {
-      console.log('Reaction sent successfully:', res);
-      this.showReactions = false;
-    },
-    (err) => {
-      console.error('Failed to add reaction:', err);
-      alert('Error submitting reaction');
+  toggleDislike() {
+    this.disliked = !this.disliked;
+    if (this.disliked) {
+      this.liked = false;
     }
-  );
-}
+  }
 
+  addLike(): void {
+    this.liked = true;
+    this.disliked = false;
+    this.showReactions = true;
+    this.getLike();
+  }
 
+  sendReaction(reactionType: string): void {
+    const userId = localStorage.getItem('userId');
+    const postId = this.article.id;
 
+    const selected = this.reactions.find(r => r.reaction_type === reactionType);
+    if (selected) {
+      this.selectedReactionIcon = 'https://new.hardknocknews.tv' + selected.icon;
 
-
-
-
-getLike(): void {
-  this.LikeServiceHttp.getReaction().subscribe(
-    (res: any) => {
-      this.reactions = res.reactions;
-
-      // ✅ Get stored reactions object
       const allReactions = JSON.parse(localStorage.getItem('postReactions') || '{}');
-      const savedReaction = allReactions[this.article.id];
 
-      if (savedReaction) {
-        const selected = this.reactions.find(r => r.reaction_type === savedReaction);
-        if (selected) {
-          this.selectedReactionIcon = 'https://new.hardknocknews.tv' + selected.icon;
-        }
+      // ✅ Only increment if not already reacted
+      if (!allReactions[postId]) {
+        this.likeCount += 1;
       }
-    },
-    (err) => {
-      console.error('Failed to get reaction:', err);
+
+      allReactions[postId] = reactionType;
+      localStorage.setItem('postReactions', JSON.stringify(allReactions));
     }
-  );
-}
 
+    const data = {
+      user_id: userId,
+      post_id: postId,
+      reaction_type: reactionType
+    };
 
+    this.LikeServiceHttp.addReaction(data).subscribe(
+      (res: any) => {
+        console.log('Reaction sent successfully:', res);
+      },
+      (err) => {
+        console.error('Failed to add reaction:', err);
+        alert('Error submitting reaction');
+      }
+    );
+  }
 
+  getLike(): void {
+    this.LikeServiceHttp.getReaction().subscribe(
+      (res: any) => {
+        this.reactions = res.reactions;
 
+        const allReactions = JSON.parse(localStorage.getItem('postReactions') || '{}');
+        const savedReaction = allReactions[this.article.id];
+
+        if (savedReaction) {
+          const selected = this.reactions.find(r => r.reaction_type === savedReaction);
+          if (selected) {
+            this.selectedReactionIcon = 'https://new.hardknocknews.tv' + selected.icon;
+          }
+        }
+      },
+      (err) => {
+        console.error('Failed to get reaction:', err);
+      }
+    );
+  }
 }

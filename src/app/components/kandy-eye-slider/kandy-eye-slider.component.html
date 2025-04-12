@@ -8,13 +8,23 @@
     <!-- Slider Container -->
     <div class="overflow-hidden">
       <div class="flex transition-transform duration-300" [style.transform]="'translateX(' + translateX + '%)'">
-        <div *ngFor="let card of cards" class="flex-shrink-0 px-2" routerLink="/video-news"
-             [ngClass]="{'w-1/5': visibleCards === 5, 'w-1/3': visibleCards === 3, 'w-1/2': visibleCards === 2}">
-          <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-2">
-            <img [src]="card.image" class="w-full h-40 object-cover">
-            <div class="p-2 text-center font-semibold">{{ card.title }}</div>
+        <div class="flex-shrink-0 px-2" routerLink="/video-news"*ngFor="let card of cards"
+        [ngClass]="{'w-1/5': visibleCards === 5, 'w-1/3': visibleCards === 3, 'w-1/2': visibleCards === 2}">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-2 h-72 flex flex-col">
+          
+          <!-- Image with fixed height -->
+          <div class="h-40 overflow-hidden">
+            <img [src]="card.image" class="w-full h-full  ">
           </div>
+      
+          <!-- Title area: scroll if too long -->
+          <div class="p-2 text-center font-semibold flex-grow overflow-y-auto scrollbar-hide">
+            {{ card.title }}
+          </div>
+      
         </div>
+      </div>
+   
       </div>
     </div>
   

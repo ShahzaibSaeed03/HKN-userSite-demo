@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ArticleService } from '../service/article.service';
 
 @Component({
   selector: 'app-carousel',
@@ -8,6 +10,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './carousel.component.css'
 })
 export class CarouselComponent implements OnInit {
+
+  private baseUrl = 'https://new.hardknocknews.tv/upload/media/posts';
+
+    constructor(private httpArticle:ArticleService , private router: Router) {}
+  
   news = [
     {
       image: 'https://picsum.photos/600/300?random=1',
@@ -32,11 +39,15 @@ export class CarouselComponent implements OnInit {
     },
   ];
 
+  newss: any[] = [];
+
+
   currentIndex = 0;
   interval: any;
 
   ngOnInit() {
     this.startAutoSlide();
+    this.getArticles();
   }
 
   nextSlide() {
@@ -54,7 +65,52 @@ export class CarouselComponent implements OnInit {
     }, 3000); // Change slide every 3 seconds
   }
 
+
+  getArticles(): void {
+    this.httpArticle.getArticle().subscribe({
+      next: (response) => {
+        console.log('API Response:', response);
+  
+        if (response && Array.isArray(response.posts)) {
+          this.newss = response.posts.map((post: any) => {
+            const updatedThumb = post.thumb ? `${this.baseUrl}/${post.thumb}-s.jpg` : null;
+            console.log('Updated Thumb URL:', updatedThumb); 
+            return {
+              ...post,
+              thumb: updatedThumb,
+
+            };
+          });
+        } else {
+          console.error('Invalid API response format:', response);
+          this.news = [];
+        }
+      },
+      error: (error) => console.error('Error fetching articles:', error),
+    });
+  }
+
   stopAutoSlide() {
     clearInterval(this.interval);
+  }
+
+
+  getPost(type: string, slug: string, article: any) {
+    // Clear the previously selected article from localStorage
+    localStorage.removeItem('selectedArticle');
+  
+    this.httpArticle.getsinglepost(type, slug).subscribe(result => {
+      this.httpArticle.setSelectedArticle(article);
+      localStorage.setItem('selectedArticle', JSON.stringify(article)); // Save the new article to localStorage
+  
+      // Navigate based on type, pass real values, not param names
+      if (type === 'video') {
+        this.router.navigate(['video-news', type, slug]);
+      } else if (type === 'news') {
+        this.router.navigate(['article', type, slug]);
+      }
+  
+      console.log(result);
+    });
   }
 }

@@ -4,10 +4,12 @@ import { CommentComponent } from "../comment-control/comment/comment.component";
 import { LikeDislikeComponent } from "../share/like-dislike/like-dislike.component";
 import { ActivatedRoute } from '@angular/router';
 import { ArticleService } from '../service/article.service';
+import { MoreNewsComponent } from '../more-news/more-news.component';
+import { TrandingNewsComponent } from "../tranding-news/tranding-news.component";
 
 @Component({
   selector: 'app-video-news',
-  imports: [CommonModule, CommentComponent, LikeDislikeComponent],
+  imports: [CommonModule, CommentComponent, LikeDislikeComponent, MoreNewsComponent, TrandingNewsComponent],
   templateUrl: './video-news.component.html',
   styleUrl: './video-news.component.css'
 })
@@ -25,9 +27,12 @@ export class VideoNewsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.article = this.articleService.getSelectedArticle();
+    // Check if there's an article in localStorage
+    const storedArticle = localStorage.getItem('selectedArticle');
+    if (storedArticle) {
+      // If there's an article in localStorage, parse it and use it
+      this.article = JSON.parse(storedArticle);
   
-    if (this.article) {
       // Format the date for created_at and updated_at
       if (this.article.created_at) {
         this.article.formattedCreatedAt = this.formatDate(this.article.created_at);
@@ -49,10 +54,8 @@ export class VideoNewsComponent implements OnInit {
       this.setExtraImages(this.article.entries);
       this.tags = this.article.tags;
       console.log(this.article);
-  
-      // Calculate the time difference for spdate
-      // this.article.spdate = this.calculateTimeAgo(this.article.spdate);
     } else {
+      // If there's no article in localStorage, fetch from the API
       this.route.params.subscribe(params => {
         this.articleService.getsinglepost(params['type'], params['slug']).subscribe(data => {
           this.article = data;
@@ -77,6 +80,9 @@ export class VideoNewsComponent implements OnInit {
           // Handle other article data
           this.setExtraImages(data.entries);
           this.tags = data.tags;
+  
+          // Save the article to localStorage for future use
+          localStorage.setItem('selectedArticle', JSON.stringify(data));
         });
       });
     }
@@ -130,7 +136,8 @@ export class VideoNewsComponent implements OnInit {
     const baseUrl = 'https://new.hardknocknews.tv/';
   
     // Format the URL to match the desired pattern
-    const formattedUrl = `${baseUrl}${videoPath}-s.jpg`;
+    const formattedUrl = `${baseUrl}${videoPath}`;
+    console.log(formattedUrl)
   
     return formattedUrl;
   }

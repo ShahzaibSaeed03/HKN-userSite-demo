@@ -1,7 +1,4 @@
-<div class="px-0 my-10 md:px-28">
-  <p class="text-2xl font-bold text-center py-2">Latest News</p>
-
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-8 gap-x-4 p-1 md:gap-x-8">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-8 gap-x-4 p-1 md:gap-x-8">
     
     <ng-container *ngFor="let item of news; let i = index">
       <div class="flex flex-row sm:flex-col items-center bg-white overflow-hidden cursor-pointer"  (click)="getPost(item.type,item.slug , item)">
@@ -21,18 +18,8 @@
         </div>
       </div>
 
-      <!-- Insert Heading and Carousel every 8 items -->
-      <ng-container *ngIf="(i + 1) % 8 === 0">
-        <div class="col-span-full w-full max-w-5xl text-center">
-          <p class="text-xl font-bold my-4">
-            {{ getHeading(i) }}
-          </p>
-          <app-kandy-eye-slider></app-kandy-eye-slider>   
-        </div>
-      </ng-container>
       
 
     </ng-container>
 
   </div>
-</div>

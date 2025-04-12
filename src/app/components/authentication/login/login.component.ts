@@ -34,6 +34,10 @@ export class LoginComponent {
   
         // Store user ID in localStorage
         localStorage.setItem('userId', response.user.id.toString());
+        localStorage.setItem('user_username', response.user.username);
+        localStorage.setItem('user_email', response.user.email);
+
+
   
         // Navigate to the home page after login
         this.router.navigate(['/home']);
