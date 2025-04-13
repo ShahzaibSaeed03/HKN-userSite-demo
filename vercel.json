@@ -1,6 +1,0 @@
-{
-    "buildCommand": "ng build --configuration production",
-    "outputDirectory": "dist/hkn",
-    "devCommand": "ng serve --port $PORT"
-  }
-  
